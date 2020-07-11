@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icon/3d.png</file>
+        <file>icon/change.jpg</file>
+        <file>icon/change_siginal.png</file>
+        <file>icon/change_whole.png</file>
+        <file>icon/color.png</file>
+        <file>icon/connect.png</file>
+        <file>icon/contiune.jpg</file>
+        <file>icon/conture.png</file>
+        <file>icon/daoru.png</file>
+        <file>icon/filter.png</file>
+        <file>icon/measure.png</file>
+        <file>icon/measurep.png</file>
+        <file>icon/open.png</file>
+        <file>icon/return.png</file>
+        <file>icon/save.png</file>
+        <file>icon/start.jpg</file>
+        <file>icon/start2.jpg</file>
+        <file>icon/tuxiang.png</file>
+        <file>icon/weizhi.png</file>
+        <file>icon/xuanzhuan.png</file>
+        <file>icon/zitai.png</file>
+        <file>icon/rotate.png</file>
+        <file>icon/translate.png</file>
+        <file>icon/zoom.png</file>
+        <file>icon/clear.png</file>
+        <file>icon/close.png</file>
+    </qresource>
+</RCC>
