@@ -1,0 +1,135 @@
+ros:
+http://wiki.ros.org/cn
+0、笔记
+	source FileName 在当前bash环境下读取并执行FileName中的命令。
+	停止运行ctrl+c
+1、创建一个catkin工作空间：
+	$ mkdir -p ~/catkin_ws/src
+	$ cd ~/catkin_ws/
+	$ catkin_make
+	$ source devel/setup.bash
+	$ echo $ROS_PACKAGE_PATH
+	/home/<youruser>/catkin_ws/src:/opt/ros/indigo/share:/opt/ros/indigo/stacks
+
+2、ros文件系统
+	rospack获取软件包有关信息。$ rospack find roscpp
+	roscd直接切换工作目录到某个软件包或者软件包集当中。 $ roscd roscpp
+	pwd来输出当前工作目录： $ pwd
+	查看ROS_PACKAGE_PATH中包含的路径： $ echo $ROS_PACKAGE_PATH
+	roscd log可以切换到ROS保存日记文件的目录下。$ roscd log
+	rosls直接按软件包的名称而不是绝对路径执行ls命令（罗列目录）。 $ rosls roscpp_tutorials
+	Tab 自动完成输入 $ roscd roscpp_tut<按TAB键 >命令行中自动补充剩余部分： $ roscd roscpp_tutorials/
+	（可以按多次）
+
+3、创建一个catkin程序包
+	切换到之前创建的catkin工作空间中的src目录下：cd ~/catkin_ws/src
+	现在使用catkin_create_pkg命令来创建一个名为'beginner_tutorials'的新程序包，这个程序包依赖于std_msgs、roscpp和rospy：
+	catkin_create_pkg beginner_tutorials std_msgs rospy roscpp
+	rospack命令工具来查看一级依赖包。 $ rospack depends1 beginner_tutorials 
+
+4、编译程序包
+	先source你的环境配置(setup)文件：$ source /opt/ros/kinetic/setup.bash
+	
+	catkin_make命令会编译默认工作空间中（~/catkin_ws/src)文件夹下的所有catkin工程。$ catkin_make
+	编译自己的程序包：
+		切换到catkin workspace 并查看src文件夹： 
+		$ cd ~/catkin_ws/
+		$ ls src
+		用catkin_make来编译beginner_tutorials的文件夹: $ catkin_make
+
+5、理解ROS节点
+	安装一个轻量级的模拟器，$ sudo apt-get install ros-kinetic-ros-tutorials
+	在运行所有ROS程序前首先要运行的命令。$ roscore 
+	打开一个新的终端, 使用命令 $ rosnode
+	rosnode 显示当前运行的ROS节点信息。列出活跃的节点:
+	$ rosnode list
+	rosout节点用于收集和记录节点调试输出信息，它总在运行。
+	rosnode info 命令返回的是关于一个特定节点的信息：$ rosnode info /rosout
+	
+	rosrun 允许使用包名直接运行一个包内的节点(而不需要知道这个包的路径)。 
+	打开一个新的终端：$ rosrun turtlesim turtlesim_node
+	在一个新的终端：$ rosnode list
+	可以通过命令行重新配置名称。$ rosrun turtlesim turtlesim_node __name:=my_turtle
+	清除rosnode列表，通过: $ rosnode cleanup 
+	使用ping来测试: $ rosnode ping my_turtle
+
+6、理解ROS话题
+	首先运行roscore:打开一个新的终端：$ roscore
+	新的终端：$ rosrun turtlesim turtlesim_node
+	新的终端：$ rosrun turtlesim turtle_teleop_key  现在可以使用键盘上的方向键来控制turtle运动了
+	rqt_graph能够创建一个显示当前系统运行情况的动态图形。rqt_graph是rqt程序包中的一部分。安装命令： 
+	$ sudo apt-get install ros-kinetic-rqt
+	$ sudo apt-get install ros-kinetic-rqt-common-plugins
+	在一个新的终端中运行：$ rosrun rqt_graph rqt_graph
+	rostopic命令工具能获取有关ROS话题的信息。 可以使用帮助选项查看rostopic的子命令： $ rostopic -h
+	rostopic echo显示在某个话题上发布的数据。 rostopic echo [topic]
+	在一个新终端中看turtle_teleop_key节点在/turtle1/cmd_vel话题上发布的数据。 $ rostopic echo /turtle1/cmd_vel（此时需重新选中turtle_teleop_key节点运行时所在的终端窗口移动方向键）
+	rostopic list能够列出所有当前订阅和发布的话题。 
+	查看一下list子命令需要的参数，在一个新终端中运行： $ rostopic list -h
+	显示出有关所发布和订阅的话题及其类型的详细信息。 $ rostopic list -v
+	rostopic type命令查看发布在某个话题上的消息类型。 $ rostopic type /turtle1/cmd_vel
+	rosmsg命令来查看消息的详细情况$ rosmsg show geometry_msgs/Twist（现在已经知道了turtlesim节点所期望的消息类型，接下来就可以给turtle发布命令了。 ）
+	rostopic pub可以把数据发布到当前某个正在广播的话题上。 rostopic pub [topic] [msg_type] [args]
+	发送一条消息给turtlesim，告诉它以2.0大小的线速度和1.8大小的角速度开始移动。
+	 $ rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]'
+	rostopic pub -r命令来发布一个稳定的命令流：这条命令以1Hz的频率发布速度命令到速度话题上。 
+	$ rostopic pub /turtle1/cmd_vel geometry_msgs/Twist -r 1 -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]'
+	rostopic hz命令可以用来查看数据发布的频率。 rostopic hz [topic]
+	我们看一下turtlesim_node发布/turtle/pose时有多快： $ rostopic hz /turtle1/pose
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		 
+	
+	
+
+
+
+
+

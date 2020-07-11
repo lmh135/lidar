@@ -1,0 +1,141 @@
+开始采集与恢复（在线）：roslaunch lidar_station lidar_online.launch
+位置检测:rqt_plot /gps_packet/ned_xyz
+姿态检测:rqt_plot /imu_packet/imu_euler
+开始恢复（离线）：roslaunch lidar_station lidar_offline.launch file-name:=/home/liminghui/srcdata_b
+
+.launch文件是ROS中用于同时启动多个节点的重要文件,重点都是节点(node)元素的集合。
+
+开始采集与恢复（在线）：roslaunch lidar_station lidar_online.launch
+位置检测:rqt_plot /gps_packet/ned_xyz
+姿态检测:rqt_plot /imu_packet/imu_euler
+开始恢复（离线）：roslaunch lidar_station lidar_offline.launch file-name:=/home/liminghui/srcdata_b
+
+建立ROS工程：
+mkdir -p catkin_ws/src 
+cd catkin_ws/
+catkin_make
+source devel/setup.bash
+cd src/
+catkin_create_pkg testing_pkg roscpp rospy std_msgs
+cd testing_pkg/src/
+gedit talker.cpp
+gedit listener.cpp
+修改testing_pkg/下的CMakeLists.txt文件
+将# add_executable(${PROJECT_NAME}_node src/testing_pkg_node.cpp)
+改成 add_executable(talker src/talker.cpp)
+add_executable(listener src/listener.cpp)
+将# target_link_libraries(${PROJECT_NAME}_node
+#   ${catkin_LIBRARIES}
+# )
+改成
+target_link_libraries(talker
+   ${catkin_LIBRARIES}
+ )
+target_link_libraries(listener
+   ${catkin_LIBRARIES}
+ )
+catkin_make
+source devel/setup.bash
+roscore
+rosrun testing_pkg talker
+rosrun testing_pkg listener
+
+roslaunch:
+cd catkin_ws/src/testing_pkg/
+mkdir -p launch
+cd launcd
+gedit testing_pkg.launch
+<launch> 
+<node pkg="testing_pkg" type="talker" name="talker" output="screen"/> <node pkg="testing_pkg" type="listener" name="listener" output="screen"/> 
+</launch>
+catkin_make
+roslaunch testing_pkg testing_pkg.launch 
+
+
+.launch文件是ROS中用于同时启动多个节点的重要文件,重点都是节点(node)元素的集合。
+
+采集-.264硬件压缩-传输-解压缩
+
+ffmpeg:
+https://blog.csdn.net/s290484188/article/details/80811468
+https://jingyan.baidu.com/article/c74d60007b87510f6a595dfc.html
+
+sudo apt install yasm
+
+raspivid -o mykeychain.h264 -t 10000 -w 1280 -h 720 -fps 25 
+raspistill -o image.jpg
+
+ls -al /dev/ | grep video
+
+
+sudo vim /etc/modules
+i2c-dev
+bcm2835-v4l2
+
+
+sudo ffmpeg -f v4l2 -r 25 -video_size vga -pix_fmt yuv420p -i /dev/video0 -b:v 500k -c:v h264_omx -an -f flv 4.h264
+
+sudo apt-get install socat
+
+链接wifi:sudo nano /etc/network/interfaces
+
+#allow-hotplug wlan0
+#iface wlan0 inet static
+#wpa-ssid Long-315_2.4G
+#wpa-psk longmen317
+#address 192.168.1.113
+#netmask 255.255.255.0
+#gateway 192.168.1.1
+#network 192.168.1.1
+#iface default inet dhcp
+
+rosrun rqt_graph rqt_graph
+
+raspivid -t 999999 -hf -o -| socat - udp-datagram:192.168.1.14:8080
+vlc udp://@:8080 –demux=h264
+
+sudo ffmpeg -f v4l2 -r 25 -video_size vga -pix_fmt yuv420p -i /dev/video0 -b:v 500k -c:v h264_omx -an -f flv -| socat - udp-datagram:192.168.1.14:8080
+vlc udp://@:8080 –demux=h264 –udp-caching=500 
+
+GPIO：
+https://blog.csdn.net/Bluechalk/article/details/54232174
+https://blog.csdn.net/zandaoguang/article/details/77144577
+
+gpio readall
+g++ gpio.cpp -o gpio -lwiringPi
+
+
+sudo apt-get install ros-kinetic-navigation
+sudo apt-get install ros-kinetic-csm
+
+ps -ef |pgrep ros
+kill pid
+
+
+192.168.1.111 树莓派
+192.168.0.201 激光
+192.168.1.12 电台
+
+arp -a，动态类型的IP地址就是树莓派的地址
+sudo ifconfig
+putty
+filezilla
+
+
+camera:
+cd ------
+ping 192.168.1.111
+//  sudo apt-get install device-tree-compiler$ sudo apt-get update$ sudo apt-get upgrade
+sudo dtc -I dts -O dtb -o /boot/dt-blob.bin dt-blob-dualcam.dts
+dtc -I dtb -O dts -o dt-blob-dualcam.dts /boot/dt-blob.bin
+sudo raspi-config
+raspistill -o 1.jpg -t 2000
+
+
+
+
+sudo apt-get install asciiview
+gpicview image.jpg  imgcat 
+这句命令将在 2000ms 后拍摄一张照片，然后保存为 keychain.jpg。
+$ raspivid -o mykeychain.h264想要用摄像头模块拍一段视频的话，可以从命令行运行 raspivid 工具。下面这句命令会按照默认配置(长度5秒，分辨率1920x1080，比特率 17MBPs)拍摄一段视频。
+

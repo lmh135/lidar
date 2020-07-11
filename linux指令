@@ -1,0 +1,97 @@
+切换英文：
+LANG=en_US.utf8
+export~LC_ALL=en_US.utf8
+切换管理员：
+sudo~su~-
+切回普通用户：
+exit
+创建目录：
+mkdir -m 700 /usr/meng/test
+
+cd 进入用户主目录；
+cd ~ 进入用户主目录； 
+cd - 返回进入此目录之前所在的目录； 
+cd .. 返回上级目录（若当前目录为“/“，则执行完后还在“/"；".."为上级目录的意思）； 
+
+ls   列出所有的文件
+在 /home/liminghui 目录下建立一个名为 vitest 的目录; mkdir /home/liminghui/vitest
+进入 vitest 这个目录当中;cd /home/liminghui/vitest
+在这个目录下建立hello.c ;vim hello.c
+vim i编辑模式  esc退出其他模式到一般模式  ：wq保存并退出vim
+gcc编译hello.c,默认生成可执行文件a.out    gcc hello.c
+执行a.out    ./a.out
+gcc hello.c -o hello      将hello.c编译生成文件hello
+删除a.out  rm  a.out
+查看权限  ls -l
+将文件的权限改为 -rwxr-xr-- 
+chmod 754 filename 或 chmod u=rwx,g=rx,o=r filename
+将hello.c编译成调试文件hello    gcc -g hello.c -o hello
+调试     gdb  hello        
+使用list命令从第一行开始列出源代码：list 1  
+继续列出：list（或者按回车）
+list 函数名：列出某个函数的源代码
+start：开始执行程序，停在main函数第一行语句前面等待命令
+next(n)：执行下一列语句
+step(s):执行下一行语句，如果有函数调用则进入到函数中
+breaktrace(或bt)：查看各级函数调用及参数，查看调用函数的栈帧bt
+set var：修改变量的值，如(gdb) set var sum=0
+查看调用函数中局部变量的值  i locals
+继续用s或n往下走，打印SUM的值  p SUM
+让程序一直运行到当前函数返回为止finish
+选择一号堆栈  f 1 （i locals可以查看所选择堆栈中变量的值）
+控制语句一条一条执行n(next)下一条直接按回车
+  退出  q
+改名移动 mv test.c test1.c(把test.c改名为test1.c)
+使用display命令使得每次停下来的时候都显示当前的sum值,(gdb) display sum
+undisplay取消先前设置的那些变量的跟踪
+（break）b在第八行设置一个断点:b 8    break命令的参数也可以是函数名，表示在某一个函数开头设置断点。
+continue命令(简写为c)连续运行而非单步运行，程序到达断点会自动停下来，这样就可以停在下一次循环的开头：
+ctrl+c退出程序
+用info命令(简写为i)可以查看已经设置的断点：(gdb) i breakpoints
+每一个断点都有一个编号，可以用编号指定删除某个断点：(gdb) delete breakpoints 2,删除所有断点delete breakpoints
+也可以先禁用：(gdb) disable breakpoints 3   再启用(gdb) enable breakpoints 3(gdb) 
+run(简写为r)重新从程序开头连续执行
+
+总结一下本节使用到的gdb命令：
+01 	break(b) 行号：在某一行设置断点
+02 	break 函数名：在某个函数开头设置断点
+03 	break...if...：设置条件断点
+04 	continue(或c)：从当前位置开始连续而非单步执行程序
+05 	delete breakpoints：删除所有断点
+06 	delete breakpoints n：删除序号为n的断点
+07 	disable breakpoints：禁用断点
+08 	enable breakpoints：启用断点
+09 	info(或i) breakpoints：参看当前设置了哪些断点
+10 	run(或r)：从开始连续而非单步执行程序
+11 	display 变量名：跟踪查看一个变量，每次停下来都显示它的值
+12 	undisplay：取消对先前设置的那些变量的跟踪
+1 	watch：设置观察点，如(gdb) watch sum
+2 	info(或i) watchpoints：查看当前设置了哪些观察点
+
+GDB的数据显示格式： 
+x 按十六进制格式显示变量。 
+d 按十进制格式显示变量。 
+u 按十六进制格式显示无符号整型。 
+o 按八进制格式显示变量。 
+t 按二进制格式显示变量。 
+a 按十六进制格式显示变量。 
+c 按字符格式显示变量。 
+f 按浮点数格式显示变量
+(gdb) p sum
+02 	$1 = 10
+03 	(gdb) p/a sum
+04 	$2 = 0xa
+05 	(gdb) p/x sum
+06 	$3 = 0xa
+07 	(gdb) p/o sum
+08 	$4 = 012
+09 	(gdb) p/t sum
+10 	$5 = 1010
+11 	(gdb) p/f sum
+12 	$6 = 1.40129846e-44
+13 	(gdb) p/c sum
+14 	$7 = 10 '\n'
+
+命令：x/3uh 0x54320 表示，从内存地址0x54320读取内容，h表示以双字节为一个单位，3表示三个单位，u表示按十六进制显示。
+
+
