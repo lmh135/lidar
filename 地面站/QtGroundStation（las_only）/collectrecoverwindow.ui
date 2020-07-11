@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CollectRecoverWindow</class>
+ <widget class="QMainWindow" name="CollectRecoverWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>828</width>
+    <height>667</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CollectRecoverWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="ReturnBtn">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>590</y>
+      <width>99</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>返回</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="offline_Group">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>121</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>离线采集恢复</string>
+    </property>
+    <widget class="QWidget" name="verticalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>19</y>
+       <width>121</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QPushButton" name="openfileBtn">
+        <property name="text">
+         <string>打开文件</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="runCore_offline_Btn">
+        <property name="text">
+         <string>运行核心节点</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="getPointBtn">
+        <property name="text">
+         <string>开始恢复</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="online_Group">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>330</y>
+      <width>121</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>在线采集恢复</string>
+    </property>
+    <widget class="QWidget" name="verticalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>-1</x>
+       <y>19</y>
+       <width>121</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QPushButton" name="connect_Btn">
+        <property name="text">
+         <string>建立连接</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="runCore_online_Btn">
+        <property name="text">
+         <string>运行核心节点</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="getDataBtn">
+        <property name="text">
+         <string>开始采集与恢复</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>0</y>
+      <width>681</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>数据监测</string>
+    </property>
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>-1</x>
+       <y>19</y>
+       <width>681</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="posDetectBtn">
+        <property name="text">
+         <string>位置检测</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="eulerDetectBtn">
+        <property name="text">
+         <string>姿态监测</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="picDetectBtn">
+        <property name="text">
+         <string>图像监测</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QListView" name="log_view">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>180</y>
+      <width>121</width>
+      <height>141</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Widget" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>139</x>
+      <y>99</y>
+      <width>671</width>
+      <height>521</height>
+     </rect>
+    </property>
+    <widget class="QPushButton" name="Color_change_Btn">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>80</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>颜色模式</string>
+     </property>
+    </widget>
+    <zorder>Color_change_Btn</zorder>
+    <zorder>point_show_Btn</zorder>
+   </widget>
+   <widget class="QPushButton" name="point_show_Btn">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>500</y>
+      <width>80</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>点云显示</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="save_point_Btn">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>540</y>
+      <width>80</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>保存点云</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>828</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Widget</class>
+   <extends>QWidget</extends>
+   <header location="global">widget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
